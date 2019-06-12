@@ -9,13 +9,21 @@
 (defn splash []
   {:status 200
    :headers {"Content-Type" "text/plain"}
-   :body "Hello from Heroku"})
+   :body "Uma delicia!!!"})
+
+(defn messaging-gateway-handler []
+  (println "enter to Webhook")
+  {:status 200
+   :headers {"Content-Type" "text/plain"}
+   :body "Messaging successful"})
 
 (defroutes app
   (GET "/" []
-       (splash))
+    (splash))
+  (GET "/messaging-gateway" []
+    (messaging-gateway-handler))
   (ANY "*" []
-       (route/not-found (slurp (io/resource "404.html")))))
+    (route/not-found (slurp (io/resource "404.html")))))
 
 (defn -main [& [port]]
   (let [port (Integer. (or port (env :port) 5000))]
