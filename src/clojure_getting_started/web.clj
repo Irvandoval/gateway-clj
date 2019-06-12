@@ -20,7 +20,7 @@
 (defroutes app
   (GET "/" []
     (splash))
-  (GET "/messaging-gateway" []
+  (POST "/messaging-gateway" []
     (messaging-gateway-handler))
   (ANY "*" []
     (route/not-found (slurp (io/resource "404.html")))))
