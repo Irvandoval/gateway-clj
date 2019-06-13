@@ -12,8 +12,9 @@
 
 (defn request
   [type from to text]
-  (let [{:keys [status headers body error] :as resp} @(http/request {:method :post
-                                                                     :url (str "https://api.smooch.io/v1.1/apps/5cfff112a777d40010a21442/appusers/" to "/messages")
+  (let [url (str "https://api.smooch.io/v1.1/apps/5cfff112a777d40010a21442/appusers/" to "/messages")
+        {:keys [status headers body error] :as resp} @(http/request {:method :post
+                                                                     :url url
                                                                      :headers {"content-type" "application/json"
                                                                                "authorization" "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImFwcF81ZDAxMmY2YmFmMjFhNDAwMTFkODhkMTkifQ.eyJzY29wZSI6ImFwcCIsImlhdCI6MTU2MDQ1MTAwNH0.pYSJ6u9vQ-Iw3y1KYNjyEPbhb4kNJxOjrOe-HvmsRPo"}
                                                                      :body (json/write-str {:text text
@@ -33,6 +34,7 @@
         last-message (last messages)
         metadata (get-in last-message [:metadata :type])
         from (get-in last-message [:authorId])]
+    (log (str "Sending message to " (:to metadata)) {:metadata from})
     (request (:type metadata) from (:to metadata) (:text last-message))))
 
 (defn inbound-handler [request]
