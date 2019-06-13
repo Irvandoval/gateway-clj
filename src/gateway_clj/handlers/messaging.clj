@@ -5,6 +5,6 @@
 (def messages-endpoint "/v1.1/apps/{appId}/appusers/{userId}/messages")
 
 (defn inbound-handler [request]
-  (println (str "Message received " (get-in request [:body])))
+  (println (str "Message received " request))
   (response {:message "Message Sent"}))
 
