@@ -12,15 +12,16 @@
 
 (defn request 
   [type from to text]
-  (http/post {:url (str smooch-root messages-endpoint to "/messages")
-              :headers {"content-type" "application/json"
-                        "authorization" "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImFwcF81ZDAxMmY2YmFmMjFhNDAwMTFkODhkMTkifQ.eyJzY29wZSI6ImFwcCIsImlhdCI6MTU2MDQ1MTAwNH0.pYSJ6u9vQ-Iw3y1KYNjyEPbhb4kNJxOjrOe-HvmsRPo"}
-              :body (json/enconde {:text text
-                                   :role "appMaker"
-                                   :type "text"
-                                   :metadata {:type type
-                                              :from from
-                                              :to to}})}))
+  (http/request {:method :post
+                 :url (str smooch-root messages-endpoint to "/messages")
+                 :headers {"content-type" "application/json"
+                           "authorization" "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImFwcF81ZDAxMmY2YmFmMjFhNDAwMTFkODhkMTkifQ.eyJzY29wZSI6ImFwcCIsImlhdCI6MTU2MDQ1MTAwNH0.pYSJ6u9vQ-Iw3y1KYNjyEPbhb4kNJxOjrOe-HvmsRPo"}
+                 :body (json/enconde {:text text
+                                      :role "appMaker"
+                                      :type "text"
+                                      :metadata {:type type
+                                                 :from from
+                                                 :to to}})}))
 
 (defn send-message
   [body]
