@@ -10,18 +10,21 @@
   [message body]
   (println (str message body)))
 
-(defn request 
+(defn request
   [type from to text]
-  (http/request {:method :post
-                 :url (str smooch-root messages-endpoint to "/messages")
-                 :headers {"content-type" "application/json"
-                           "authorization" "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImFwcF81ZDAxMmY2YmFmMjFhNDAwMTFkODhkMTkifQ.eyJzY29wZSI6ImFwcCIsImlhdCI6MTU2MDQ1MTAwNH0.pYSJ6u9vQ-Iw3y1KYNjyEPbhb4kNJxOjrOe-HvmsRPo"}
-                 :body (json/write-str {:text text
-                                      :role "appMaker"
-                                      :type "text"
-                                      :metadata {:type type
-                                                 :from from
-                                                 :to to}})}))
+  (let [{:keys [status headers body error] :as resp} @(http/request {:method :post
+                                                                     :url (str smooch-root messages-endpoint to "/messages")
+                                                                     :headers {"content-type" "application/json"
+                                                                               "authorization" "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImFwcF81ZDAxMmY2YmFmMjFhNDAwMTFkODhkMTkifQ.eyJzY29wZSI6ImFwcCIsImlhdCI6MTU2MDQ1MTAwNH0.pYSJ6u9vQ-Iw3y1KYNjyEPbhb4kNJxOjrOe-HvmsRPo"}
+                                                                     :body (json/write-str {:text text
+                                                                                            :role "appMaker"
+                                                                                            :type "text"
+                                                                                            :metadata {:type type
+                                                                                                       :from from
+                                                                                                       :to to}})})]
+    (if error
+      (log "Failed, exception: " error)
+      (log "HTTP POST success: " body))))
 
 (defn send-message
   [body]
@@ -34,7 +37,7 @@
 
 (defn inbound-handler [request]
   (let [body (get-in request [:body])]
-    (log "Message received" body)
+    (log "Message received " body)
     (send-message body)
     (response {:message "Message Sent"})))
 
