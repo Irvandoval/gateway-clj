@@ -10,14 +10,6 @@
   [message body]
   (println (str message body)))
 
-(defn send-message 
-  [body]
-  (let [user-id (get-in body [:appUser :_id])
-        messages (get-in body [:messages])
-        last-message (last messages)
-        metadata (get-in last-message [:metadata :type])]
-    (request (:type metadata) (:from metadata) (:to metadata) (:text last-message))))
-
 (defn request 
   [type from to text]
   (http/post {:url (str smooch-root messages-endpoint to "/messages")
@@ -29,6 +21,14 @@
                                    :metadata {:type type
                                               :from from
                                               :to to}})}))
+
+(defn send-message
+  [body]
+  (let [user-id (get-in body [:appUser :_id])
+        messages (get-in body [:messages])
+        last-message (last messages)
+        metadata (get-in last-message [:metadata :type])]
+    (request (:type metadata) (:from metadata) (:to metadata) (:text last-message))))
 
 (defn inbound-handler [request]
   (let [body (get-in request [:body])]
