@@ -9,6 +9,8 @@
                  [ring/ring-json "0.4.0"]
                  [http-kit "2.3.0"]
                  [org.clojure/data.json "0.2.6"]]
+                 [ring/ring-jetty-adapter "1.4.0"]]
+
   :plugins [[lein-ring "0.12.5"]]
   :ring {:handler gateway-clj.core/app
          :port 8000}
