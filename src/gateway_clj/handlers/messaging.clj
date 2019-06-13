@@ -28,8 +28,9 @@
   (let [user-id (get-in body [:appUser :_id])
         messages (get-in body [:messages])
         last-message (last messages)
-        metadata (get-in last-message [:metadata :type])]
-    (request (:type metadata) (:from metadata) (:to metadata) (:text last-message))))
+        metadata (get-in last-message [:metadata :type])
+        from (get-in last-message [:authorId])]
+    (request (:type metadata) from (:to metadata) (:text last-message))))
 
 (defn inbound-handler [request]
   (let [body (get-in request [:body])]
