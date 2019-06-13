@@ -13,7 +13,7 @@
 (defn request
   [type from to text]
   (let [{:keys [status headers body error] :as resp} @(http/request {:method :post
-                                                                     :url (str "https://api.smooch.io/v1.1/apps/5cfff112a777d40010a21442/appusers/" to "/messages")
+                                                                     :url "https://api.smooch.io/v1.1/apps/5cfff112a777d40010a21442/appusers/7ff13940d1138223c45492e9/messages"
                                                                      :headers {"content-type" "application/json"
                                                                                "authorization" "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImFwcF81ZDAxMmY2YmFmMjFhNDAwMTFkODhkMTkifQ.eyJzY29wZSI6ImFwcCIsImlhdCI6MTU2MDQ1MTAwNH0.pYSJ6u9vQ-Iw3y1KYNjyEPbhb4kNJxOjrOe-HvmsRPo"}
                                                                      :body (json/write-str {:text text
