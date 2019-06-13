@@ -1,39 +1,23 @@
+# gateway-clj
 
-# clojure-getting-started
+FIXME
 
-A barebones Clojure app, which can easily be deployed to Heroku.  
+## Prerequisites
 
-This application support the [Getting Started with Clojure](https://devcenter.heroku.com/articles/getting-started-with-clojure) article - check it out.
+You will need [Leiningen][] 2.0.0 or above installed.
 
-## Running Locally
+[leiningen]: https://github.com/technomancy/leiningen
 
-Make sure you have Clojure installed.  Also, install the [Heroku Toolbelt](https://toolbelt.heroku.com/).
+## Running
 
-```sh
-$ git clone https://github.com/heroku/clojure-getting-started.git
-$ cd clojure-getting-started
-$ lein repl
-user=> (require 'clojure-getting-started.web)
-user=>(def server (clojure-getting-started.web/-main))
-```
+To start a web server for the application, run:
 
-Your app should now be running on [localhost:5000](http://localhost:5000/).
+    lein ring server
 
-## Deploying to Heroku
+## Production
 
-```sh
-$ heroku create
-$ git push heroku master
-$ heroku open
-```
+    LEIN_NO_DEV=true lein ring server-headless
 
-or
+## License
 
-[![Deploy to Heroku](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
-
-## Documentation
-
-For more information about using Clojure on Heroku, see these Dev Center articles:
-
-- [Clojure on Heroku](https://devcenter.heroku.com/categories/clojure)
-
+Copyright © 2019 FIXME
