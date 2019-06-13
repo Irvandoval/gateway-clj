@@ -6,7 +6,9 @@
                  [lein-ring "0.12.1"]
                  [compojure "1.6.1"]
                  [ring/ring-defaults "0.3.2"]
-                 [ring/ring-json "0.4.0"]]
+                 [ring/ring-json "0.4.0"]
+                 [http-kit "2.3.0"]
+                 [org.clojure/data.json "0.2.6"]]
   :plugins [[lein-ring "0.12.5"]]
   :ring {:handler gateway-clj.core/app
          :port 8000}
