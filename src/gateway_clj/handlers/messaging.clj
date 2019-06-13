@@ -32,7 +32,7 @@
   (let [user-id (get-in body [:appUser :_id])
         messages (get-in body [:messages])
         last-message (last messages)
-        metadata (get-in last-message [:metadata :type])
+        metadata (get-in last-message [:metadata])
         from (get-in last-message [:authorId])]
     (log (str "Sending message to " (:to metadata)) {:metadata from})
     (request (:type metadata) from (:to metadata) (:text last-message))))
