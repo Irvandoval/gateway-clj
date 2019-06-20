@@ -1,1 +1,1 @@
-web: LEIN_NO_DEV=true lein ring server-headless
+web: java $JVM_OPTS -cp target/gateway-clj-standalone.jar clojure.main -m gateway-clj.core

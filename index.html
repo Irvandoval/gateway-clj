@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Smooch POC - Agent - WS</title>
+</head>
+<body>
+  
+  <h1>Agent Demo</h1>
+  
+  <div>
+    <input type="text" id="input" value="Enter your message" />
+  </div>
+
+  <div>
+    <button type="button" id="open">Open</button>
+    <button type="button" id="send">Send</button>
+    <button type="button" id="close">Close</button>
+  </div>
+
+  <div id="messages"></div>
+
+  <script>
+    const input = document.getElementById('input');
+    const openBtn = document.getElementById('open');
+    const sendBtn = document.getElementById('send');
+    const closeBtn = document.getElementById('close');
+    const messages = document.getElementById('messages');
+
+    const output = (style, text) => {
+      messages.innerHTML += `<br/><span class="${ style }"> ${ text } </span>`;
+    };
+
+    let ws = undefined;
+
+    openBtn.onclick = e => {
+      e.preventDefault();
+
+      if (ws !== undefined) {
+        output('error', 'Already connected');
+        return;
+      }
+
+      ws = new WebSocket('ws://localhost:8000/agent');
+
+      ws.onerror = error => output('error', error);
+
+      ws.onopen = event => output('opened', `Connected to ${ event.currentTarget.url }`);
+
+      ws.onmessage = ({ data }) => output('received', `<<< ${ data }`);
+
+      ws.onclose = ({code, reason}) => {
+        output('closed', `Disconnected: ${ code } ${ reason}`);
+        ws.undefined;
+      };
+    }
+  </script>
+</body>
+</html>
